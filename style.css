@@ -1,0 +1,387 @@
+#photoList {
+    flex:1;
+    display: flex !important;  /* 讓內容橫向排列 */
+    flex-direction: column; /* ✅ 讓卡片內部橫向排列 */
+    align-items: flex-start;
+    overflow-y: auto;
+    white-space: nowrap;  /* 避免元素自動換行 */
+    max-width: 100%;  /* 限制最大寬度 */
+    padding: 10px;
+    gap: 15px;  /* 照片之間的間距 */
+    border-bottom: 2px solid #ccc;  /* 增加底部分隔線 */
+    scroll-behavior: smooth;  /* 讓滾動動畫更順暢 */
+    box-sizing: border-box;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow-y: auto;
+    padding: 10px;
+    max-height: 80vh;  /* 限制高度可滾動 */
+}
+
+
+#map {
+    flex: 2;
+    width: 70vw;  /* 設定地圖寬度為視窗寬度的 90% */
+    /*max-width: 1200px;  設定地圖的最大寬度，避免在大螢幕上太寬 */
+    height: 80vh;  /*保持高度占視窗的 80% */
+    margin: 0 auto; /* 讓地圖置中 */
+    border-radius: 10px; /* 適當的圓角，讓視覺更柔和 */
+}
+
+#mainContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    height: 80vh; /* 讓整體高度一致 */
+    min-width: 800px; /* ✅ 新增：避免整體比例被壓縮太小 */
+}
+
+@media (max-width: 800px) {
+    #mainContainer {
+      flex-direction: column;
+      height: auto;
+    }
+  
+    #map, #photoList {
+      width: 100%;
+      height: 50vh;
+    }
+  }
+
+.photo-info {
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start; 
+    gap: 5px;
+    margin-top: 5px;
+    justify-content: flex-end; /* 讓內容貼齊底部 */
+
+}
+
+.photo-info input[type="text"],
+.photo-info textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    resize: vertical;
+    min-height: 100;
+    font-family: inherit;
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 13px;
+}
+
+.photo-info .button-group {
+    display: flex;
+    gap: 8px;
+}
+
+.photo-info button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.photo-info button:hover {
+    background-color: #0056b3;
+}
+.thumbnail {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; 
+    border-radius: 5px;
+    max-height: 300px;
+    object-fit: cover;  /* 確保圖片不會變形 */
+}
+
+
+/* 美化滾動條 (Chrome & Edge) */
+#photoList::-webkit-scrollbar {
+    height: 8px;
+}
+
+#photoList::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 1px;
+
+}
+
+#photoList::-webkit-scrollbar-thumb:hover {
+    background: #202020;
+}
+
+
+.photo-name {
+    width: 100%;
+    text-align: center;
+    font-size: 18px; /* 增加字體大小 */
+    /*font-weight: bold;  讓標題更醒目 */
+}
+
+.go-to-marker {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+.go-to-marker:hover {
+    background: #0056b3;
+}
+
+.category-selection {
+    display: flex;
+    flex-direction: column;  /* 讓分類選項直向排列 */
+}
+
+.photo-item {
+    background: white;
+    width: 100%;
+    align-items: flex-start;
+    align-items: center; /* 垂直置中左右兩欄 */
+    max-width: 500px;  /* 控制最大寬度，讓卡片不會太寬 */
+    margin: 0 auto;    /* 置中 */
+    display: flex;
+    flex-direction: row;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    gap: 15px;
+}
+
+.photo-item:hover {/* 讓指標的照片稍微放大 */
+    transform: scale(1.05);
+}
+
+
+/* 確保整個 popup 內容靠左 */
+.popup-content {
+    text-align: left;
+    font-size: 16px; /* 設定預設字體大小 */
+    color: rgb(0, 0, 0);
+}
+
+/* 只讓標題置中 */
+.popup-title {
+    font-size: 22px !important; /* 放大標題字體 */
+    font-weight: bold;
+    text-align: center; /* 讓標題置中 */
+    display: block;
+    margin-bottom: 8px; /* 與下方內容保持間距 */
+}
+
+.popup-content img {
+    max-height: 95vh; /* 設定最大高度為視窗高度的 80% */
+    height: auto;  /* 保持原始比例縮放 */
+    /*display: block;*/
+    margin: 0 auto; /* 讓圖片置中 */
+}
+
+/* 針對直式照片（高度大於寬度） */
+.popup-content img.portrait {
+    max-height: 2500px;  /* 限制直式照片的最大高度 */
+    width: auto;  /* 確保圖片等比例縮放 */
+}
+
+.gps-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 2000; /* ✅ 確保彈出視窗比地圖高 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 400px;
+}
+
+
+
+.gps-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.gps-preview {
+    width: 200px;
+    margin: 10px 0;
+}
+
+.gps-content input {
+    width: 80%;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.gps-content button {
+    margin: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+/* 強制讓 popup 內容使用我們的 CSS */
+.leaflet-popup-content {
+    text-align: left !important;
+    font-size: 116px !important;
+}
+
+/* 確保標題置中 */
+.leaflet-popup-content .popup-title {
+    font-size: 122px !important;
+    text-align: center !important;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 28px;
+}
+
+
+.popup-content strong {
+    font-size: 20px;  /* 調整標題字體大小 */
+    color: rgb(0, 0, 102);  /* 設定標題顏色 */
+    display: block;  /* 讓標題獨立成一行 */
+    margin-bottom: -20px;  /* 標題與內文的間距 */
+    text-align: center;
+}
+
+/* 放大圖片的背景區塊 */
+.modal {
+    display: none; /* 預設隱藏 */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* 黑色半透明背景 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 放大的圖片 */
+.modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+/* 右上角的關閉按鈕 */
+.close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.category-tags {
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.category-tags {
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.photo-tag {
+    color: white;
+    /*padding: 3px 8px;*/
+    font-size: 18px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+/* 🔹 不同類別的標籤顏色 */
+.tag-red { background-color: #E63946; color: white; }
+.tag-orange { background-color: #F4A261; color: white; }
+.tag-yellow { background-color: #E9C46A; color: white; }
+.tag-green { background-color: #2A9D8F; color: white; }
+.tag-blue { background-color: #457B9D; color: white; }
+.tag-purple { background-color: #8B5CF6; color: white; }
+
+#map-controls {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 8px;
+}
+#map-controls button {
+    margin: 2px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.photo-description {
+    width: 100%;
+    margin-top: 5px;
+    padding: 5px;
+    min-height: 100%;
+    resize: vertical;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+  }
+
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+html, body {
+    height: 100vh;
+    overflow: hidden;  /* 禁止整頁滾動 */
+    margin: 0;
+}
+
+/* 讓 JavaScript 決定圖片大小，這裡只保留基本樣式 */
+.popup-image {
+    height: auto;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto 10px auto;
+}
